@@ -1,6 +1,9 @@
 import express, { Request, Response } from 'express';
-import config from './config';
 import cors from 'cors';
+import config from './config';
+import { AppRouter } from './routes';
+import { GlobalErrorHandler } from './middlewares/global-error-handler';
+import { NotFound } from './middlewares/not-found';
 
 // creating an instance of app
 const app = express();
@@ -10,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 // application routers
+app.use('/api/v1', AppRouter);
 
 // root endpoint of the app
 app.get('/', (req: Request, res: Response) => {
@@ -18,5 +22,11 @@ app.get('/', (req: Request, res: Response) => {
     message: 'Server is running at port ' + config.port,
   });
 });
+
+// global error handler
+app.use(GlobalErrorHandler);
+
+// Not found middleware
+app.use(NotFound);
 
 export default app;
