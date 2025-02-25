@@ -5,16 +5,16 @@ import { OtpRouter } from '../modules/otp/otp.router';
 export const AppRouter = Router();
 
 const routes = [
-  {
-    path: '/auth',
-    router: AuthRouter,
-  },
-  {
-    path: '/otp',
-    router: OtpRouter,
-  },
+    {
+        path: '/auth',
+        router: AuthRouter,
+    },
+    {
+        path: '/otp',
+        router: OtpRouter,
+    },
 ];
 
 routes.forEach(({ path, router }) => {
-  AppRouter.use(path, router);
+    AppRouter.use(path, router);
 });

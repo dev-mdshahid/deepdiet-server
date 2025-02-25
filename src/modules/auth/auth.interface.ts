@@ -1,6 +1,6 @@
 export enum TUserRole {
     USER = 'user',
-    ADMIN = 'admin'
+    ADMIN = 'admin',
 }
 
 export type TAuthUser = {
@@ -8,4 +8,4 @@ export type TAuthUser = {
     email: string;
     role: TUserRole;
     password: string;
-}
+};

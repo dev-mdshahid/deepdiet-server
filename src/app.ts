@@ -17,10 +17,10 @@ app.use('/api/v1', AppRouter);
 
 // root endpoint of the app
 app.get('/', (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: 'Server is running at port ' + config.port,
-  });
+    res.status(200).json({
+        success: true,
+        message: 'Server is running at port ' + config.port,
+    });
 });
 
 // global error handler
