@@ -6,12 +6,12 @@ import { verifyOtpService } from '../services/verify-otp.service';
 export const verifyOtpController = catchAsync(
     async (req: Request, res: Response) => {
         const data = req.body;
-        const otpRecord = await verifyOtpService(data.email, data.otp);
+        await verifyOtpService(data.email, data.otp);
 
         sendSuccessResponse(res, {
             statusCode: 200,
             message: 'OTP verified successfully!',
-            data: otpRecord,
+            data: {},
         });
     }
 );

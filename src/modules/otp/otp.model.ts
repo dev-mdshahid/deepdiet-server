@@ -22,6 +22,11 @@ export const SOtp = new Schema<TOtp>({
         type: Date,
         default: Date.now() + 5 * 60000,
     },
+    otpCreatedAt: {
+        type: Date,
+        default: Date.now(),
+        expires: 30 * 60,
+    },
     isVerified: {
         type: Boolean,
         default: false,

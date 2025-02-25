@@ -5,5 +5,6 @@ export type TOtp = {
     reason: TReasonForRequestingOtp;
     otp: string;
     otpExpiry: Date;
+    otpCreatedAt: Date;
     isVerified: boolean;
 };

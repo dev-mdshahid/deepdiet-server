@@ -4,7 +4,7 @@ import { TActivityLevel, TGender, TGoal } from './user.interface';
 const SDemographicValidaiton = z.object({
     height: z.number(),
     weight: z.number(),
-    dob: z.date(),
+    dob: z.string(),
     gender: z.enum(Object.values(TGender) as [string, ...string[]]),
     activityLevel: z.enum(
         Object.values(TActivityLevel) as [string, ...string[]]

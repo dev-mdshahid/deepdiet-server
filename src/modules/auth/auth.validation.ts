@@ -1,15 +1,11 @@
 import { z } from 'zod';
 import { TUserRole } from './auth.interface';
-
-const SUserInfoValidation = z.object({
-    username: z.string(),
-    email: z.string().email(),
-});
+import { UserValidationSchema } from '../user/user.validation';
 
 const SRegisterValidation = z.object({
     role: z.enum(Object.values(TUserRole) as [string, ...string[]]),
     password: z.string().min(8),
-    userInfo: SUserInfoValidation,
+    userInfo: UserValidationSchema.createUser,
 });
 
 const SLoginValidation = z.object({

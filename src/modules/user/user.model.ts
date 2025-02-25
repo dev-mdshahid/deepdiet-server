@@ -66,14 +66,19 @@ export const SFoodPreferences = new Schema<TFoodPreferences>({
     },
 });
 
-export const SUser = new Schema<TUser>({
-    username: { type: String, required: true, unique: true, trim: true },
-    name: { type: String, required: true, trim: true },
-    email: { type: String, required: true, unique: true, trim: true },
-    profilePicture: { type: String, required: true },
-    medicalConditions: { type: [String], required: true },
-    demographic: { type: SDemographic, required: true },
-    foodPreferences: { type: SFoodPreferences },
-});
+export const SUser = new Schema<TUser>(
+    {
+        username: { type: String, required: true, unique: true, trim: true },
+        name: { type: String, required: true, trim: true },
+        email: { type: String, required: true, unique: true, trim: true },
+        profilePicture: { type: String, required: true },
+        medicalConditions: { type: [String] },
+        demographic: { type: SDemographic, required: true },
+        foodPreferences: { type: SFoodPreferences },
+    },
+    {
+        timestamps: true,
+    }
+);
 
 export const UserModel = model<TUser>('User', SUser);

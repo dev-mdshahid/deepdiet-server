@@ -1,4 +1,5 @@
 import { AppError } from '../../../error/app-error';
+import { reasonForRequestingOtp } from '../otp.constants';
 import { OtpModel } from '../otp.model';
 
 export const verifyOtpService = async (email: string, otp: string) => {
@@ -12,10 +13,13 @@ export const verifyOtpService = async (email: string, otp: string) => {
         throw new AppError(404, 'Invalid or expired OTP');
     }
     otpRecord.isVerified = true;
-    await otpRecord.save();
+
+    if (otpRecord.reason === reasonForRequestingOtp.VERIFY_EMAIL) {
+        await otpRecord.save();
+    } else {
+        await otpRecord.deleteOne();
+    }
     return {
-        otp_id: otpRecord._id,
-        reason: otpRecord.reason,
-        isVerified: otpRecord.isVerified,
+        isVerified: true,
     };
 };

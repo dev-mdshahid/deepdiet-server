@@ -8,7 +8,7 @@ export const ValidateEmail = catchAsync(
         const { email } = req.body;
         const { valid } = await deepValidateEmail(email);
         if (!valid) {
-            throw new AppError(400, `Sorry! We couldn't validate your email!`);
+            throw new AppError(400, `Sorry! You provided an invalid email!`);
         }
         next();
     }
