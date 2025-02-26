@@ -27,6 +27,10 @@ export const SAuthUser = new Schema<TAuthUser>(
             required: true,
             trim: true,
         },
+        passwordLastChangedAt: {
+            type: Date,
+            default: Date.now(),
+        },
     },
     {
         timestamps: true,

@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import config from './config';
 import { AppRouter } from './routes';
 import { GlobalErrorHandler } from './middlewares/global-error-handler';
@@ -11,6 +12,7 @@ const app = express();
 // parsers
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 // application routers
 app.use('/api/v1', AppRouter);

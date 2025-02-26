@@ -2,37 +2,33 @@ import mongoose from 'mongoose';
 import { z } from 'zod';
 import { AppError } from '../../../error/app-error';
 import { reasonForRequestingOtp } from '../../otp/otp.constants';
-import { OtpModel } from '../../otp/otp.model';
 import { UserModel } from '../../user/user.model';
 import { AuthUserModel } from '../auth.model';
 import { AuthValidationSchema } from '../auth.validation';
+import { verifyToken } from '../auth.utils';
+import config from '../../../config';
 
 export const registerUserService = async (
-    data: z.infer<typeof AuthValidationSchema.register>
+    data: z.infer<typeof AuthValidationSchema.register>,
+    sessionToken: string
 ) => {
+    const decoded = verifyToken(
+        sessionToken,
+        config.jwt_session_token_secret as string
+    );
     const { role, password, userInfo } = data;
+    console.log(decoded);
 
-    // check if user email is verified
-    const otpRecord = await OtpModel.findOne({
-        email: userInfo.email,
-        isVerified: true,
-        reason: reasonForRequestingOtp.VERIFY_EMAIL,
-    });
-
-    if (!otpRecord) {
-        throw new AppError(
-            400,
-            'Your email is not verified! Try to register again!'
-        );
+    // checking the session token
+    if (
+        !decoded ||
+        decoded.email !== userInfo.email ||
+        decoded.reason != reasonForRequestingOtp.VERIFY_EMAIL
+    ) {
+        throw new AppError(401, 'Invalid session token!');
     }
 
-    // check if the user already exists
-    const userRecord = await AuthUserModel.findOne({
-        email: userInfo.email,
-    });
-    if (userRecord) {
-        throw new AppError(409, 'User already exists with this email!');
-    }
+    // checking user existence is not necessary here as it is already being checked in request-otp api
 
     const session = await mongoose.startSession();
     try {
@@ -50,11 +46,9 @@ export const registerUserService = async (
         await AuthUserModel.create([authUser], { session });
 
         const [newUser] = await UserModel.create(
-            [{ ...userInfo, isVerified: otpRecord.isVerified }],
+            [{ ...userInfo, isVerified: true }],
             { session }
         );
-
-        await OtpModel.findByIdAndDelete(otpRecord._id, { session });
 
         await session.commitTransaction();
         return newUser;

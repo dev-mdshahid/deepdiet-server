@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-
 import { AppError } from '../../../error/app-error';
 import { AuthUserModel } from '../../auth/auth.model';
 import { OtpModel } from '../otp.model';

@@ -3,24 +3,24 @@ import { catchAsync } from '../../../utils/catch-async';
 import { AuthServices } from '../services';
 import { sendSuccessResponse } from '../../../utils/send-response';
 import { AppError } from '../../../error/app-error';
+import { clearAllTokens } from '../auth.utils';
 
-export const registerUserController = catchAsync(
+export const forgotPasswordController = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
+        req;
         const { sessionToken } = req.cookies;
         if (!sessionToken) {
             throw new AppError(401, 'Session token not found!');
         }
 
         const userData = req.body;
-        const user = await AuthServices.registerUser(userData, sessionToken);
+        const user = await AuthServices.forgotPassword(userData, sessionToken);
 
-        // clear the session token
-        res.clearCookie('sessionToken');
-
+        clearAllTokens(res);
         sendSuccessResponse(res, {
-            statusCode: 201,
-            message: 'User registered successfully',
-            data: user,
+            statusCode: 200,
+            message: 'Password updated successfully!',
+            data: user || {},
         });
     }
 );

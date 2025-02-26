@@ -8,4 +8,5 @@ export type TAuthUser = {
     email: string;
     role: TUserRole;
     password: string;
+    passwordLastChangedAt: Date;
 };

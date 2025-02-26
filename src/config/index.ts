@@ -14,4 +14,16 @@ export default {
     email_secure: process.env.EMAIL_SECURE === 'true',
     email_username: process.env.EMAIL_USERNAME,
     email_password: process.env.EMAIL_PASSWORD,
+    jwt_access_token_secret: process.env.JWT_ACCESS_TOKEN_SECRET,
+    jwt_refresh_token_secret: process.env.JWT_REFRESH_TOKEN_SECRET,
+    jwt_session_token_secret: process.env.JWT_SESSION_TOKEN_SECRET,
+    jwt_access_token_expiry_in_minutes: Number(
+        process.env.JWT_ACCESS_TOKEN_EXPIRY_IN_MINUTES
+    ),
+    jwt_refresh_token_expiry_in_minutes: Number(
+        process.env.JWT_REFRESH_TOKEN_EXPIRY_IN_MINUTES
+    ),
+    jwt_session_token_expiry_in_minutes: Number(
+        process.env.JWT_SESSION_TOKEN_EXPIRY_IN_MINUTES
+    ),
 };

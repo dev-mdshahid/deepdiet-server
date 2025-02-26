@@ -13,7 +13,20 @@ const SLoginValidation = z.object({
     password: z.string(),
 });
 
+const SForgotPasswordValidation = z.object({
+    email: z.string().email(),
+    password: z.string(),
+});
+
+const SJwtPayloadValidation = z.object({
+    username: z.string(),
+    role: z.enum(Object.values(TUserRole) as [string, ...string[]]),
+    email: z.string().email(),
+});
+
 export const AuthValidationSchema = {
     register: SRegisterValidation,
     login: SLoginValidation,
+    jwtPayload: SJwtPayloadValidation,
+    forgotPassword: SForgotPasswordValidation,
 };
