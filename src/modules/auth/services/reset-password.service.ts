@@ -6,8 +6,8 @@ import { AuthUserModel } from '../auth.model';
 import { verifyToken } from '../auth.utils';
 import { AuthValidationSchema } from '../auth.validation';
 
-export const forgotPasswordService = async (
-    userData: z.infer<typeof AuthValidationSchema.forgotPassword>,
+export const resetPasswordService = async (
+    userData: z.infer<typeof AuthValidationSchema.resetPassword>,
     sessionToken: string
 ) => {
     const { email, password } = userData;

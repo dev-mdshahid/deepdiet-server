@@ -5,7 +5,7 @@ import { sendSuccessResponse } from '../../../utils/send-response';
 import { AppError } from '../../../error/app-error';
 import { clearAllTokens } from '../auth.utils';
 
-export const forgotPasswordController = catchAsync(
+export const resetPasswordController = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         req;
         const { sessionToken } = req.cookies;
@@ -14,7 +14,7 @@ export const forgotPasswordController = catchAsync(
         }
 
         const userData = req.body;
-        const user = await AuthServices.forgotPassword(userData, sessionToken);
+        const user = await AuthServices.resetPassword(userData, sessionToken);
 
         clearAllTokens(res);
         sendSuccessResponse(res, {

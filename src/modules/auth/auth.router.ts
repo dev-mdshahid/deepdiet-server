@@ -19,8 +19,8 @@ AuthRouter.post(
 );
 AuthRouter.post(
     '/forgot-password',
-    ValidateRequest(AuthValidationSchema.forgotPassword),
-    AuthControllers.forgotPassword
+    ValidateRequest(AuthValidationSchema.resetPassword),
+    AuthControllers.resetPassword
 );
 
 AuthRouter.get('/refresh-token', AuthControllers.refreshToken);

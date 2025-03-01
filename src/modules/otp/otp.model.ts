@@ -16,7 +16,9 @@ export const SOtp = new Schema<TOtp>({
     },
     otp: {
         type: String,
-        default: crypto.randomInt(100000, 999999).toString(),
+        default: String(
+            crypto.getRandomValues(new Uint32Array(1))[0] % 1000000
+        ).padStart(6, '0'),
     },
     otpExpiry: {
         type: Date,
