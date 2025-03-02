@@ -7,7 +7,7 @@
         "build": "tsc",
         "start:prod": "node ./dist/server.js",
         "start": "node ./dist/server.js",
-        "start:dev": "npx ts-node-dev --respawn --transpile-only src/server.ts"
+        "dev": "npx ts-node-dev --respawn --transpile-only src/server.ts"
     },
     "keywords": [],
     "author": "",

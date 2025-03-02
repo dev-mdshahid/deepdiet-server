@@ -23,9 +23,13 @@ export const requestOtpService = async (
         (emailNeedsToBeUnique && !isUserExists) ||
         (!emailNeedsToBeUnique && isUserExists)
     ) {
-        const otp = await OtpModel.create({
+        // generating the otp
+        const otp = await OtpModel.generateOtp();
+
+        const savedOtp = await OtpModel.create({
             email,
             reason,
+            otp,
         });
 
         // setup nodemailer
@@ -44,11 +48,11 @@ export const requestOtpService = async (
             from: `"Messo AI 😍" <${process.env.EMAIL_USERNAME}>`,
             to: email,
             subject: 'Your OTP from MessO AI',
-            text: otp.otp,
-            html: requestOtpTemplate(otp, reason),
+            text: savedOtp.otp,
+            html: requestOtpTemplate(savedOtp, reason),
         };
         await transporter.sendMail(mailOptions);
-        return otp;
+        return savedOtp;
     }
 
     throw new AppError(404, 'User not found!');

@@ -1,3 +1,4 @@
+import { Model } from 'mongoose';
 import { TReasonForRequestingOtp } from './otp.constants';
 
 export type TOtp = {
@@ -8,3 +9,8 @@ export type TOtp = {
     otpCreatedAt: Date;
     isVerified: boolean;
 };
+
+export interface IOtpModel extends Model<TOtp> {
+    generateOtp(): Promise<string>;
+    verifyOtp(otp: string): Promise<boolean>;
+}
