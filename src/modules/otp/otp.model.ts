@@ -18,13 +18,13 @@ export const SOtp = new Schema<TOtp, IOtpModel>({
         type: String,
         required: true,
     },
-    otpExpiry: {
+    expiresAt: {
         type: Date,
-        default: Date.now() + 5 * 60000,
+        default: () => new Date(Date.now() + 5 * 60000),
     },
     otpCreatedAt: {
         type: Date,
-        default: Date.now(),
+        default: Date.now,
         expires: 30 * 60,
     },
     isVerified: {

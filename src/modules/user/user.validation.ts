@@ -6,18 +6,16 @@ const SDemographicValidaiton = z.object({
     weight: z.number(),
     dob: z.string(),
     gender: z.enum(Object.values(TGender) as [string, ...string[]]),
-    activityLevel: z.enum(
-        Object.values(TActivityLevel) as [string, ...string[]]
-    ),
-    goal: z.enum(Object.values(TGoal) as [string, ...string[]]),
+    // activityLevel: z.enum(
+    //     Object.values(TActivityLevel) as [string, ...string[]]
+    // ),
+    // goal: z.enum(Object.values(TGoal) as [string, ...string[]]),
 });
 
 const SCreateUserValidation = z.object({
     username: z.string().min(3).max(30).trim(),
     name: z.string().min(3).max(20).trim(),
     email: z.string().email(),
-    profilePicture: z.string(),
-    medicalConditions: z.array(z.string()),
     demographic: SDemographicValidaiton,
 });
 

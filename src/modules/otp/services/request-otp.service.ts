@@ -32,27 +32,31 @@ export const requestOtpService = async (
             otp,
         });
 
-        // setup nodemailer
-        const transporter = nodemailer.createTransport({
-            host: process.env.EMAIL_HOST,
-            port: Number(process.env.EMAIL_PORT),
-            secure: process.env.EMAIL_SECURE === 'true', // true for port 465, false for other ports
-            auth: {
-                user: process.env.EMAIL_USERNAME,
-                pass: process.env.EMAIL_PASSWORD,
-            },
-        });
+        if (savedOtp._id) {
+            // setup nodemailer
+            const transporter = nodemailer.createTransport({
+                host: process.env.EMAIL_HOST,
+                port: Number(process.env.EMAIL_PORT),
+                secure: process.env.EMAIL_SECURE === 'true', // true for port 465, false for other ports
+                auth: {
+                    user: process.env.EMAIL_USERNAME,
+                    pass: process.env.EMAIL_PASSWORD,
+                },
+            });
 
-        // mail options
-        const mailOptions = {
-            from: `"Messo AI 😍" <${process.env.EMAIL_USERNAME}>`,
-            to: email,
-            subject: 'Your OTP from MessO AI',
-            text: savedOtp.otp,
-            html: requestOtpTemplate(savedOtp, reason),
-        };
-        await transporter.sendMail(mailOptions);
-        return savedOtp;
+            // mail options
+            const mailOptions = {
+                from: `"DeepDiet 😍" <${process.env.EMAIL_USERNAME}>`,
+                to: email,
+                subject: 'Your OTP from DeepDiet',
+                text: savedOtp.otp,
+                html: requestOtpTemplate(savedOtp, reason),
+            };
+            await transporter.sendMail(mailOptions);
+            return savedOtp;
+        } else {
+            throw new AppError(500, 'Failed to send OTP!');
+        }
     }
 
     throw new AppError(404, 'User not found!');

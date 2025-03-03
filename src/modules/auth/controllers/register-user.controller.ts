@@ -7,6 +7,7 @@ import { AppError } from '../../../error/app-error';
 export const registerUserController = catchAsync(
     async (req: Request, res: Response, next: NextFunction) => {
         const { sessionToken } = req.cookies;
+        console.log(req.cookies);
         if (!sessionToken) {
             throw new AppError(401, 'Session token not found!');
         }

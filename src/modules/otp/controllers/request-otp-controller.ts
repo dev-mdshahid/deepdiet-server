@@ -8,7 +8,7 @@ import { z } from 'zod';
 export const requestOtpController = catchAsync(
     async (req: Request, res: Response) => {
         const data: z.infer<typeof OtpValidationSchema.requestOtp> = req.body;
-        await OtpServices.requestOtp(data.email, data.reason);
+        const savedOtp = await OtpServices.requestOtp(data.email, data.reason);
 
         sendSuccessResponse(res, {
             statusCode: 200,

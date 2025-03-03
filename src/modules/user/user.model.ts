@@ -32,12 +32,10 @@ export const SDemographic = new Schema<TDemographic>({
     activityLevel: {
         type: String,
         enum: Object.values(TActivityLevel),
-        required: true,
     },
     goal: {
         type: String,
         enum: Object.values(TGoal),
-        required: true,
     },
 });
 
